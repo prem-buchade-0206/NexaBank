@@ -1,4 +1,4 @@
-<img src="./public/favicon.svg"></img>
+<img src="./public/favicon.svg"/>
 
 
 # React + Vite
