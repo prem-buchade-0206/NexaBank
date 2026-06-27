@@ -1,0 +1,183 @@
+/* ============================================================
+   NEXABANK – PREMIUM THEME SYSTEM v2
+   Light: Warm ivory + deep indigo — luxury fintech aesthetic
+   Dark:  Deep navy + electric blue — premium dark fintech
+   ============================================================ */
+
+:root,
+[data-theme="light"] {
+  /* ── Brand ───────────────────────────────────────────────── */
+  --color-primary: #4f46e5;
+  /* rich indigo            */
+  --color-primary-hover: #4338ca;
+  --color-primary-light: #eef2ff;
+  /* soft indigo tint       */
+  --color-primary-dark: #3730a3;
+  --color-secondary: #059669;
+  --color-secondary-light: #ecfdf5;
+  --color-accent: #7c3aed;
+  --color-accent-light: #f5f3ff;
+
+  /* ── Semantic ────────────────────────────────────────────── */
+  --color-success: #059669;
+  --color-success-light: #ecfdf5;
+  --color-success-dark: #065f46;
+  --color-warning: #d97706;
+  --color-warning-light: #fffbeb;
+  --color-warning-dark: #92400e;
+  --color-danger: #dc2626;
+  --color-danger-light: #fef2f2;
+  --color-danger-dark: #991b1b;
+  --color-info: #0284c7;
+  --color-info-light: #f0f9ff;
+  --color-info-dark: #075985;
+
+  /* ── Surfaces — warm ivory, not cold grey ────────────────── */
+  --color-bg: #f5f4f0;
+  /* warm parchment         */
+  --color-bg-secondary: #eeecea;
+  /* slightly deeper warm   */
+  --color-bg-tertiary: #e4e2de;
+  --color-surface: #fdfcfb;
+  /* warm white card        */
+  --color-surface-elevated: #ffffff;
+  --color-surface-overlay: rgba(253, 252, 251, 0.92);
+
+  /* ── Text ────────────────────────────────────────────────── */
+  --color-text: #1a1714;
+  /* warm near-black        */
+  --color-text-secondary: #3d3a35;
+  --color-text-muted: #6b6760;
+  --color-text-subtle: #9c9890;
+  --color-text-inverse: #ffffff;
+  --color-text-on-primary: #ffffff;
+
+  /* ── Borders ─────────────────────────────────────────────── */
+  --color-border: #e0ddd8;
+  --color-border-strong: #ccc9c3;
+  --color-border-subtle: #eeece8;
+
+  /* ── Sidebar — deep indigo, premium & rich ───────────────── */
+  --sidebar-bg: #1e1b4b;
+  /* deep indigo             */
+  --sidebar-text: #c7d2fe;
+  /* indigo-100              */
+  --sidebar-text-muted: #818cf8;
+  /* indigo-400              */
+  --sidebar-text-active: #ffffff;
+  --sidebar-item-hover: rgba(255, 255, 255, 0.07);
+  --sidebar-item-active: rgba(129, 140, 248, 0.2);
+  --sidebar-accent: #818cf8;
+  /* indigo-400              */
+  --sidebar-border: rgba(255, 255, 255, 0.07);
+  --sidebar-logo-bg: #4f46e5;
+
+  /* ── Shadows — warmer & richer ───────────────────────────── */
+  --shadow-xs: 0 1px 2px 0 rgb(26 23 20 / 0.06);
+  --shadow-sm: 0 1px 4px 0 rgb(26 23 20 / 0.08), 0 1px 2px -1px rgb(26 23 20 / 0.06);
+  --shadow-md: 0 4px 12px -2px rgb(26 23 20 / 0.10), 0 2px 6px -2px rgb(26 23 20 / 0.06);
+  --shadow-lg: 0 12px 24px -4px rgb(26 23 20 / 0.10), 0 4px 8px -4px rgb(26 23 20 / 0.06);
+  --shadow-xl: 0 24px 48px -8px rgb(26 23 20 / 0.14), 0 8px 16px -6px rgb(26 23 20 / 0.08);
+  --shadow-primary: 0 4px 16px 0 rgb(79 70 229 / 0.35);
+  --shadow-success: 0 4px 14px 0 rgb(5 150 105 / 0.30);
+  --shadow-danger: 0 4px 14px 0 rgb(220 38 38 / 0.30);
+
+  /* ── Glassmorphism ───────────────────────────────────────── */
+  --glass-bg: rgba(253, 252, 251, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-blur: blur(20px);
+
+  /* ── Scrollbar ───────────────────────────────────────────── */
+  --scrollbar-thumb: #ccc9c3;
+  --scrollbar-thumb-hover: #9c9890;
+
+  /* ── Radius ──────────────────────────────────────────────── */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* ── Transitions ─────────────────────────────────────────── */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+
+  /* ── Layout ──────────────────────────────────────────────── */
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 72px;
+  --header-height: 64px;
+  --content-max-width: 1400px;
+}
+
+/* ============================================================
+   DARK THEME — unchanged, already premium
+   ============================================================ */
+[data-theme="dark"] {
+  --color-primary: #6366f1;
+  --color-primary-hover: #4f46e5;
+  --color-primary-light: rgba(99, 102, 241, 0.15);
+  --color-primary-dark: #4338ca;
+  --color-secondary: #10b981;
+  --color-secondary-light: rgba(16, 185, 129, 0.15);
+  --color-accent: #8b5cf6;
+  --color-accent-light: rgba(139, 92, 246, 0.15);
+
+  --color-success: #10b981;
+  --color-success-light: rgba(16, 185, 129, 0.15);
+  --color-success-dark: #059669;
+  --color-warning: #f59e0b;
+  --color-warning-light: rgba(245, 158, 11, 0.15);
+  --color-warning-dark: #d97706;
+  --color-danger: #ef4444;
+  --color-danger-light: rgba(239, 68, 68, 0.15);
+  --color-danger-dark: #dc2626;
+  --color-info: #3b82f6;
+  --color-info-light: rgba(59, 130, 246, 0.15);
+  --color-info-dark: #2563eb;
+
+  --color-bg: #07090f;
+  --color-bg-secondary: #0d1117;
+  --color-bg-tertiary: #161b22;
+  --color-surface: #0d1117;
+  --color-surface-elevated: #161b22;
+  --color-surface-overlay: rgba(13, 17, 23, 0.92);
+
+  --color-text: #e6edf3;
+  --color-text-secondary: #c9d1d9;
+  --color-text-muted: #8b949e;
+  --color-text-subtle: #484f58;
+  --color-text-inverse: #0d1117;
+  --color-text-on-primary: #ffffff;
+
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.14);
+  --color-border-subtle: rgba(255, 255, 255, 0.04);
+
+  /* ── Scrollbar ───────────────────────────────────────────── */
+  --scrollbar-thumb: rgba(255, 255, 255, 0.15);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.28);
+
+  --sidebar-bg: #060912;
+  --sidebar-text: #c9d1d9;
+  --sidebar-text-muted: #6e7681;
+  --sidebar-text-active: #ffffff;
+  --sidebar-item-hover: rgba(255, 255, 255, 0.06);
+  --sidebar-item-active: rgba(99, 102, 241, 0.18);
+  --sidebar-accent: #6366f1;
+  --sidebar-border: rgba(255, 255, 255, 0.05);
+  --sidebar-logo-bg: #4f46e5;
+
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 8px -2px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 12px 24px -4px rgb(0 0 0 / 0.5), 0 4px 8px -4px rgb(0 0 0 / 0.4);
+  --shadow-xl: 0 24px 48px -8px rgb(0 0 0 / 0.6), 0 8px 16px -6px rgb(0 0 0 / 0.4);
+  --shadow-primary: 0 4px 20px 0 rgb(99 102 241 / 0.4);
+  --shadow-success: 0 4px 14px 0 rgb(16 185 129 / 0.35);
+  --shadow-danger: 0 4px 14px 0 rgb(239 68 68 / 0.35);
+
+  --glass-bg: rgba(13, 17, 23, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: blur(20px);
+}
