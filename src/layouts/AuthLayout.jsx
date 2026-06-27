@@ -63,7 +63,7 @@ const AuthLayout = ({ children }) => {
         </div>
 
         <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--color-text-subtle)', marginTop: 20 }}>
-          © 2024 NexaBank · Secure Banking Platform
+          © {new Date().getFullYear()} NexaBank · Secure Banking Platform
         </p>
       </div>
     </div>
