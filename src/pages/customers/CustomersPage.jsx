@@ -4,6 +4,7 @@ import customerService from '../../services/customerService';
 import { useToast } from '../../context/ToastContext';
 import Button from '../../components/common/Button';
 import SearchBar from '../../components/common/SearchBar';
+import Select from '../../components/common/Select';
 import CustomerTable from '../../components/tables/CustomerTable';
 import Pagination from '../../components/common/Pagination';
 import Modal from '../../components/modals/Modal';
@@ -21,14 +22,14 @@ const CustomersPage = () => {
   const canWrite = isAdmin || isBranchManager || isEmployee;
 
   const [customers, setCustomers] = useState([]);
-  const [total,     setTotal]     = useState(0);
-  const [loading,   setLoading]   = useState(true);
-  const [search,    setSearch]    = useState('');
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
-  const [sortBy,    setSortBy]    = useState('createdAt');
-  const [sortDir,   setSortDir]   = useState('desc');
+  const [sortBy, setSortBy] = useState('createdAt');
+  const [sortDir, setSortDir] = useState('desc');
 
-  const [addOpen,    setAddOpen]    = useState(false);
+  const [addOpen, setAddOpen] = useState(false);
   const [editTarget, setEditTarget] = useState(null);
   const [viewTarget, setViewTarget] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
@@ -119,18 +120,19 @@ const CustomersPage = () => {
       </div>
 
       {/* Filters */}
-      <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap', alignItems: 'center' }}>
         <SearchBar value={search} onChange={setSearch} placeholder="Search by name, email, phone…" style={{ flex: 1, minWidth: 240 }} />
-        <select
-          value={statusFilter}
-          onChange={e => setStatusFilter(e.target.value)}
-          className="form-control"
-          style={{ width: 160 }}
-        >
-          <option value="">All Status</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-        </select>
+        <div style={{ width: 160 }}>
+          <Select
+            value={statusFilter}
+            onChange={e => setStatusFilter(e.target.value)}
+            options={[
+              { value: 'active', label: 'Active' },
+              { value: 'inactive', label: 'Inactive' },
+            ]}
+            placeholder="All Status"
+          />
+        </div>
       </div>
 
       {/* Table */}

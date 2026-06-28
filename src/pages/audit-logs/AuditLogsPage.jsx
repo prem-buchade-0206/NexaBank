@@ -4,6 +4,7 @@ import auditService from '../../services/auditService';
 import { useToast } from '../../context/ToastContext';
 import Button from '../../components/common/Button';
 import SearchBar from '../../components/common/SearchBar';
+import Select from '../../components/common/Select';
 import AuditLogTable from '../../components/tables/AuditLogTable';
 import Pagination from '../../components/common/Pagination';
 import { SkeletonTable } from '../../components/common/Skeleton';
@@ -11,15 +12,15 @@ import usePagination from '../../hooks/usePagination';
 import useDebounce from '../../hooks/useDebounce';
 import { downloadCSV, formatDate } from '../../utils';
 
-const MODULES  = ['Auth','Customers','Accounts','Transactions','Loans','Reports','Settings','Users'];
-const ACTIONS  = ['LOGIN','LOGOUT','CUSTOMER_CREATE','CUSTOMER_DELETE','ACCOUNT_CREATE','TRANSACTION','LOAN_APPROVE','LOAN_REJECT','REPORT_EXPORT','SETTINGS_UPDATE','USER_CREATE','INTEREST_CREDIT'];
+const MODULES = ['Auth', 'Customers', 'Accounts', 'Transactions', 'Loans', 'Reports', 'Settings', 'Users'];
+const ACTIONS = ['LOGIN', 'LOGOUT', 'CUSTOMER_CREATE', 'CUSTOMER_DELETE', 'ACCOUNT_CREATE', 'TRANSACTION', 'LOAN_APPROVE', 'LOAN_REJECT', 'REPORT_EXPORT', 'SETTINGS_UPDATE', 'USER_CREATE', 'INTEREST_CREDIT'];
 
 const AuditLogsPage = () => {
   const toast = useToast();
-  const [logs,         setLogs]         = useState([]);
-  const [total,        setTotal]        = useState(0);
-  const [loading,      setLoading]      = useState(true);
-  const [search,       setSearch]       = useState('');
+  const [logs, setLogs] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
   const [actionFilter, setActionFilter] = useState('');
   const [moduleFilter, setModuleFilter] = useState('');
 
@@ -33,8 +34,8 @@ const AuditLogsPage = () => {
         search: debouncedSearch,
         action: actionFilter,
         module: moduleFilter,
-        page:   pagination.currentPage,
-        limit:  pagination.pageSize,
+        page: pagination.currentPage,
+        limit: pagination.pageSize,
       });
       setLogs(res.data);
       setTotal(res.total);
@@ -83,16 +84,24 @@ const AuditLogsPage = () => {
       </div>
 
       {/* Filters */}
-      <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap', alignItems: 'center' }}>
         <SearchBar value={search} onChange={setSearch} placeholder="Search by user, action, IP…" style={{ flex: 1, minWidth: 240 }} />
-        <select value={actionFilter} onChange={e => setActionFilter(e.target.value)} className="form-control" style={{ width: 200 }}>
-          <option value="">All Actions</option>
-          {ACTIONS.map(a => <option key={a} value={a}>{a}</option>)}
-        </select>
-        <select value={moduleFilter} onChange={e => setModuleFilter(e.target.value)} className="form-control" style={{ width: 160 }}>
-          <option value="">All Modules</option>
-          {MODULES.map(m => <option key={m} value={m}>{m}</option>)}
-        </select>
+        <div style={{ width: 210 }}>
+          <Select
+            value={actionFilter}
+            onChange={e => setActionFilter(e.target.value)}
+            options={ACTIONS.map(a => ({ value: a, label: a }))}
+            placeholder="All Actions"
+          />
+        </div>
+        <div style={{ width: 165 }}>
+          <Select
+            value={moduleFilter}
+            onChange={e => setModuleFilter(e.target.value)}
+            options={MODULES.map(m => ({ value: m, label: m }))}
+            placeholder="All Modules"
+          />
+        </div>
         {(search || actionFilter || moduleFilter) && (
           <Button variant="ghost" onClick={() => { setSearch(''); setActionFilter(''); setModuleFilter(''); }}>Clear</Button>
         )}

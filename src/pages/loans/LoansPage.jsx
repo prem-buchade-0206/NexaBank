@@ -5,6 +5,7 @@ import { useToast } from '../../context/ToastContext';
 import { useAuth } from '../../context/AuthContext';
 import Button from '../../components/common/Button';
 import SearchBar from '../../components/common/SearchBar';
+import Select from '../../components/common/Select';
 import LoanTable from '../../components/tables/LoanTable';
 import Pagination from '../../components/common/Pagination';
 import Modal from '../../components/modals/Modal';
@@ -20,22 +21,22 @@ import { Landmark, TrendingUp, Clock } from 'lucide-react';
 const LoansPage = () => {
   const toast = useToast();
   const { user, isAdmin, isBranchManager, isEmployee } = useAuth();
-  const canWrite   = isAdmin || isBranchManager || isEmployee;
+  const canWrite = isAdmin || isBranchManager || isEmployee;
   const canApprove = isAdmin || isBranchManager;
 
-  const [loans,        setLoans]        = useState([]);
-  const [total,        setTotal]        = useState(0);
-  const [loading,      setLoading]      = useState(true);
-  const [stats,        setStats]        = useState({});
-  const [search,       setSearch]       = useState('');
+  const [loans, setLoans] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState({});
+  const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
-  const [typeFilter,   setTypeFilter]   = useState('');
-  const [addOpen,      setAddOpen]      = useState(false);
-  const [viewTarget,   setViewTarget]   = useState(null);
-  const [approveTarget,setApproveTarget]= useState(null);
+  const [typeFilter, setTypeFilter] = useState('');
+  const [addOpen, setAddOpen] = useState(false);
+  const [viewTarget, setViewTarget] = useState(null);
+  const [approveTarget, setApproveTarget] = useState(null);
   const [rejectTarget, setRejectTarget] = useState(null);
   const [rejectReason, setRejectReason] = useState('');
-  const [formLoading,  setFormLoading]  = useState(false);
+  const [formLoading, setFormLoading] = useState(false);
 
   const debouncedSearch = useDebounce(search, 350);
   const pagination = usePagination(total, 10);
@@ -110,31 +111,43 @@ const LoansPage = () => {
       </div>
 
       {/* Stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 24 }}>
-        <StatCard title="Active Loans"      value={stats.active  || 0} format="number"   color="success" icon={Landmark}   loading={loading} />
-        <StatCard title="Pending Approval"  value={stats.pending || 0} format="number"   color="warning" icon={Clock}      loading={loading} />
+      <div className="grid-3" style={{ marginBottom: 24 }}>
+        <StatCard title="Active Loans" value={stats.active || 0} format="number" color="success" icon={Landmark} loading={loading} />
+        <StatCard title="Pending Approval" value={stats.pending || 0} format="number" color="warning" icon={Clock} loading={loading} />
         <StatCard title="Total Outstanding" value={stats.totalBook || 0} format="currency" color="primary" icon={TrendingUp} loading={loading} />
       </div>
 
       {/* Filters */}
-      <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap', alignItems: 'center' }}>
         <SearchBar value={search} onChange={setSearch} placeholder="Search by loan ID, customer…" style={{ flex: 1, minWidth: 240 }} />
-        <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)} className="form-control" style={{ width: 150 }}>
-          <option value="">All Status</option>
-          <option value="pending">Pending</option>
-          <option value="approved">Approved</option>
-          <option value="active">Active</option>
-          <option value="rejected">Rejected</option>
-          <option value="closed">Closed</option>
-        </select>
-        <select value={typeFilter} onChange={e => setTypeFilter(e.target.value)} className="form-control" style={{ width: 150 }}>
-          <option value="">All Types</option>
-          <option value="personal">Personal</option>
-          <option value="home">Home</option>
-          <option value="vehicle">Vehicle</option>
-          <option value="business">Business</option>
-          <option value="education">Education</option>
-        </select>
+        <div style={{ width: 160 }}>
+          <Select
+            value={statusFilter}
+            onChange={e => setStatusFilter(e.target.value)}
+            options={[
+              { value: 'pending', label: 'Pending' },
+              { value: 'approved', label: 'Approved' },
+              { value: 'active', label: 'Active' },
+              { value: 'rejected', label: 'Rejected' },
+              { value: 'closed', label: 'Closed' },
+            ]}
+            placeholder="All Status"
+          />
+        </div>
+        <div style={{ width: 160 }}>
+          <Select
+            value={typeFilter}
+            onChange={e => setTypeFilter(e.target.value)}
+            options={[
+              { value: 'personal', label: 'Personal' },
+              { value: 'home', label: 'Home' },
+              { value: 'vehicle', label: 'Vehicle' },
+              { value: 'business', label: 'Business' },
+              { value: 'education', label: 'Education' },
+            ]}
+            placeholder="All Types"
+          />
+        </div>
       </div>
 
       {/* Table */}
@@ -144,7 +157,7 @@ const LoansPage = () => {
             loans={loans}
             onView={setViewTarget}
             onApprove={canApprove ? setApproveTarget : undefined}
-            onReject={canApprove  ? setRejectTarget  : undefined}
+            onReject={canApprove ? setRejectTarget : undefined}
             canApprove={canApprove}
           />
           <Pagination {...pagination} totalItems={total} onPageChange={pagination.goToPage} onPageSizeChange={pagination.changePageSize} />
@@ -161,18 +174,18 @@ const LoansPage = () => {
         {viewTarget && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
             {[
-              ['Loan ID',          viewTarget.loanId],
-              ['Customer',         viewTarget.customerName],
-              ['Type',             viewTarget.type],
-              ['Loan Amount',      formatCurrency(viewTarget.amount)],
-              ['Outstanding',      formatCurrency(viewTarget.outstanding)],
-              ['Interest Rate',    `${viewTarget.interestRate}% p.a.`],
-              ['Tenure',           `${viewTarget.tenure} months`],
-              ['Monthly EMI',      formatCurrency(viewTarget.emiAmount)],
-              ['Status',           viewTarget.status],
-              ['Applied On',       viewTarget.appliedAt?.slice(0, 10)],
-              ['Approved By',      viewTarget.approvedBy || '—'],
-              ['Next EMI Date',    viewTarget.nextEmiDate || '—'],
+              ['Loan ID', viewTarget.loanId],
+              ['Customer', viewTarget.customerName],
+              ['Type', viewTarget.type],
+              ['Loan Amount', formatCurrency(viewTarget.amount)],
+              ['Outstanding', formatCurrency(viewTarget.outstanding)],
+              ['Interest Rate', `${viewTarget.interestRate}% p.a.`],
+              ['Tenure', `${viewTarget.tenure} months`],
+              ['Monthly EMI', formatCurrency(viewTarget.emiAmount)],
+              ['Status', viewTarget.status],
+              ['Applied On', viewTarget.appliedAt?.slice(0, 10)],
+              ['Approved By', viewTarget.approvedBy || '—'],
+              ['Next EMI Date', viewTarget.nextEmiDate || '—'],
             ].map(([label, val]) => (
               <div key={label} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid var(--color-border-subtle)' }}>
                 <span style={{ fontSize: 13, color: 'var(--color-text-muted)', fontWeight: 500 }}>{label}</span>

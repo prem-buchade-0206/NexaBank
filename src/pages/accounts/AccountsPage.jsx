@@ -4,6 +4,7 @@ import accountService from '../../services/accountService';
 import { useToast } from '../../context/ToastContext';
 import Button from '../../components/common/Button';
 import SearchBar from '../../components/common/SearchBar';
+import Select from '../../components/common/Select';
 import AccountTable from '../../components/tables/AccountTable';
 import Pagination from '../../components/common/Pagination';
 import Modal from '../../components/modals/Modal';
@@ -23,15 +24,15 @@ const AccountsPage = () => {
   const canWrite = isAdmin || isBranchManager || isEmployee;
 
   const [accounts, setAccounts] = useState([]);
-  const [total,    setTotal]    = useState(0);
-  const [loading,  setLoading]  = useState(true);
-  const [search,   setSearch]   = useState('');
-  const [typeFilter,   setTypeFilter]   = useState('');
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [typeFilter, setTypeFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
-  const [addOpen,  setAddOpen]  = useState(false);
+  const [addOpen, setAddOpen] = useState(false);
   const [viewTarget, setViewTarget] = useState(null);
   const [formLoading, setFormLoading] = useState(false);
-  const [summary,  setSummary]  = useState({ total: 0, totalBalance: 0, byType: {} });
+  const [summary, setSummary] = useState({ total: 0, totalBalance: 0, byType: {} });
 
   const debouncedSearch = useDebounce(search, 350);
   const pagination = usePagination(total, 10);
@@ -87,26 +88,38 @@ const AccountsPage = () => {
       </div>
 
       {/* Summary cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 24 }}>
-        <StatCard title="Total Accounts"   value={summary.total}        format="number"   color="primary" icon={CreditCard} loading={loading} />
-        <StatCard title="Total Balance"    value={summary.totalBalance}  format="currency" color="success" icon={DollarSign} loading={loading} />
+      <div className="grid-3" style={{ marginBottom: 24 }}>
+        <StatCard title="Total Accounts" value={summary.total} format="number" color="primary" icon={CreditCard} loading={loading} />
+        <StatCard title="Total Balance" value={summary.totalBalance} format="currency" color="success" icon={DollarSign} loading={loading} />
         <StatCard title="Savings Accounts" value={summary.byType?.savings || 0} format="number" color="accent" icon={TrendingUp} loading={loading} />
       </div>
 
       {/* Filters */}
-      <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap', alignItems: 'center' }}>
         <SearchBar value={search} onChange={setSearch} placeholder="Search by account no., customer…" style={{ flex: 1, minWidth: 240 }} />
-        <select value={typeFilter} onChange={e => setTypeFilter(e.target.value)} className="form-control" style={{ width: 170 }}>
-          <option value="">All Types</option>
-          <option value="savings">Savings</option>
-          <option value="current">Current</option>
-          <option value="fixed_deposit">Fixed Deposit</option>
-        </select>
-        <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)} className="form-control" style={{ width: 140 }}>
-          <option value="">All Status</option>
-          <option value="active">Active</option>
-          <option value="frozen">Frozen</option>
-        </select>
+        <div style={{ width: 170 }}>
+          <Select
+            value={typeFilter}
+            onChange={e => setTypeFilter(e.target.value)}
+            options={[
+              { value: 'savings', label: 'Savings' },
+              { value: 'current', label: 'Current' },
+              { value: 'fixed_deposit', label: 'Fixed Deposit' },
+            ]}
+            placeholder="All Types"
+          />
+        </div>
+        <div style={{ width: 150 }}>
+          <Select
+            value={statusFilter}
+            onChange={e => setStatusFilter(e.target.value)}
+            options={[
+              { value: 'active', label: 'Active' },
+              { value: 'frozen', label: 'Frozen' },
+            ]}
+            placeholder="All Status"
+          />
+        </div>
       </div>
 
       {loading ? <SkeletonTable rows={8} cols={8} /> : (
