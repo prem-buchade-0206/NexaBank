@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import Avatar from '../common/Avatar';
 import NotificationPanel from './NotificationPanel';
 import notificationService from '../../services/notificationService';
-import Tooltip from '../../components/common/Tooltip';
+import Tooltip from '../common/Tooltip';
 
 const THEME_OPTIONS = [
   { key: 'light', label: 'Light', Icon: Sun, desc: 'Warm ivory' },
