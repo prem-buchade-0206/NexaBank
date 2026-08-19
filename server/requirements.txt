@@ -1,0 +1,47 @@
+# ---- Core Framework ----
+fastapi>=0.118.0
+uvicorn[standard]>=0.34.0
+
+# ---- Database (Async MongoDB) ----
+motor>=3.7.0
+beanie>=1.29.0
+
+# ---- Validation & Settings ----
+pydantic>=2.10.0
+pydantic-settings>=2.7.0
+email-validator>=2.2.0
+
+# ---- Security ----
+pwdlib[argon2]>=0.2.1
+pyjwt>=2.10.0
+python-multipart>=0.0.20
+
+# ---- Logging ----
+loguru>=0.7.3
+
+# ---- Rate Limiting ----
+slowapi>=0.1.9
+
+# ---- PDF Generation ----
+fpdf2>=2.8.0
+
+# ---- Date arithmetic (month-based amortization schedules) ----
+python-dateutil>=2.9.0
+
+# ---- Background Processing (optional, wired but not required) ----
+redis>=5.2.0
+
+# ---- Testing ----
+pytest>=8.3.0
+pytest-asyncio>=0.25.0
+pytest-cov>=6.0.0
+httpx>=0.28.0
+faker>=33.0.0
+mongomock-motor>=0.0.34
+
+# ---- Code Quality ----
+ruff>=0.9.0
+black>=24.10.0
+isort>=5.13.0
+mypy>=1.14.0
+pre-commit>=4.0.0

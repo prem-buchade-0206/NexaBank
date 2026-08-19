@@ -1,0 +1,41 @@
+[project]
+name = "nexabank-backend"
+version = "0.1.0"
+requires-python = ">=3.13"
+
+[tool.black]
+line-length = 110
+target-version = ["py313"]
+
+[tool.isort]
+profile = "black"
+line_length = 110
+
+[tool.ruff]
+line-length = 110
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "ASYNC", "SIM"]
+ignore = ["B008"]  # FastAPI's Depends() in default args is intentional
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+plugins = ["pydantic.mypy"]
+ignore_missing_imports = true
+# Relaxed pending a later typing-cleanup pass: response bodies are typed as
+# bare `dict` throughout the routers (the actual shape is enforced by the
+# SuccessResponse/ErrorResponse Pydantic models at serialization time), and
+# Motor's generic wrapper types (AsyncIOMotorClient/Database) don't carry
+# useful type params in this codebase. Real logic/type-safety errors
+# (wrong types, unguarded Optionals, etc.) still fail the build.
+disable_error_code = ["type-arg"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["app/tests"]
+
+[tool.coverage.run]
+source = ["app"]
+omit = ["app/tests/*"]
